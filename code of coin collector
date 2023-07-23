@@ -1,0 +1,203 @@
+import pygame
+import time
+from sys import exit
+from pygame.locals import*
+pygame.init()
+scr = pygame.display.set_mode((800,800))
+scr.fill((0,0,0))
+a = pygame.time.Clock()
+class player(pygame.sprite.Sprite):
+    def __init__(self,width,height,posx,posy,pic):
+        super().__init__()
+        self.image = pygame.image.load(pic)
+        self.rect = self.image.get_rect()
+        self.rect.center = [posx,posy]
+
+class obstacle(pygame.sprite.Sprite):
+    def __init__(self,width1,height1,posx1,posy1,pic1):
+        super().__init__()
+        self.image = pygame.image.load(pic1)
+        self.rect = self.image.get_rect()
+        self.rect.center = [posx1,posy1]
+    def click(self):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+
+            if self.rect.collidepoint(event.pos):
+                page2()
+    def update(self):
+        self.click()
+obj = player(40,40,300,490,"C:/Users/Dell/OneDrive/Desktop/icons/city3.jpg")
+obj_grp = pygame.sprite.Group()
+obj_grp.add(obj)
+o1 = obstacle(40,40,383,380,"C:/Users/Dell/OneDrive/Desktop/icons/start1.jpg")
+o1_grp = pygame.sprite.Group()
+o1_grp.add(o1)
+o12 = obstacle(40,40,400,80,"C:/Users/Dell/OneDrive/Desktop/icons/sky.jpg")
+o12_grp = pygame.sprite.Group()
+o12_grp.add(o12)
+o13 = obstacle(40,40,390,216,"C:/Users/Dell/OneDrive/Desktop/icons/textcoin2.jpg")
+o13_grp = pygame.sprite.Group()
+o13_grp.add(o13)
+def pop():
+    scr2 = pygame.display.set_mode((400, 400))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+        scr2.fill((0,0,0))
+        pygame.display.update()
+def page2():
+    scr1 = pygame.display.set_mode((800, 800))
+    text = pygame.font.SysFont("comic sans", 48)
+    s = 1
+    bg = pygame.image.load("C:/Users/Dell/OneDrive/Desktop/icons/gameplay.jpg")
+    class player1(pygame.sprite.Sprite):
+        def __init__(self, width, height, posx, posy, pic):
+            super().__init__()
+            self.image = pygame.image.load(pic)
+            self.rect = self.image.get_rect()
+            self.rect.center = [posx, posy]
+        def move(self):
+            #self.rect.bottom -= 0.6
+            key = pygame.key.get_pressed()
+            if key[pygame.K_RIGHT]:
+                if self.rect.right < 790:
+                    self.rect.right += 0.5
+            if key[pygame.K_LEFT]:
+                if self.rect.left > 1:
+                    self.rect.left -= 0.8
+            if key[pygame.K_UP]:
+                if self.rect.top > 1:
+                    self.rect.top -= 0.8
+            if key[pygame.K_DOWN]:
+                if self.rect.bottom < 790:
+                    self.rect.bottom += 0.8
+       def collide(self):
+            if self.rect.colliderect(brick.rect) or self.rect.colliderect(brick2.rect) or self.rect.colliderect(brick3.rect):
+                self.rect.center = [1000,1000]
+                brick.rect.center = [1001,100]
+                brick2.rect.center = [1001, 1001]
+                brick3.rect.center = [1001, 1001]
+                popup.rect.center = [400,400]
+                coin.rect.center = [1008,1000]
+                coin3.rect.center = [1008, 1000]
+       def update(self):
+            self.move()
+            self.collide()
+    class obstacle1(pygame.sprite.Sprite):
+        def __init__(self, width1, height1, posx1, posy1, pic):
+            super().__init__()
+            self.image = pygame.image.load(pic)
+            self.rect = self.image.get_rect()
+            self.rect.center = [posx1, posy1]
+        def parallax(self):
+            self.rect.bottom += 1.5
+            if self.rect.bottom > 790:
+                self.rect.bottom = 10
+        def update(self):
+            self.parallax()
+    class pop(pygame.sprite.Sprite):
+        def __init__(self,posx2,posy2,pic1):
+            super().__init__()
+            self.image = pygame.image.load(pic1)
+            self.rect = self.image.get_rect()
+            self.rect.center = [posx2,posy2]
+    class const(pygame.sprite.Sprite):
+        def __init__(self,posx3,posy3,pic2):
+            super().__init__()
+            self.image = pygame.image.load(pic2)
+            self.rect = self.image.get_rect()
+            self.rect.center = [posx3,posy3]
+    popup = pop(1000,1000,"C:/Users/Dell/OneDrive/Desktop/icons/over.jpg")
+    popup_grp = pygame.sprite.Group()
+    popup_grp.add(popup)
+    obj = player1(40, 40, 400, 700, "C:/Users/Dell/OneDrive/Desktop/icons/skateboard.jpg")
+    obj_grp = pygame.sprite.Group()
+    obj_grp.add(obj)
+    coin = obstacle1(40, 40, 400, 600, "C:/Users/Dell/OneDrive/Desktop/icons/coin.jpg")
+    coin_grp = pygame.sprite.Group()
+    coin_grp.add(coin)
+    brick2 = obstacle1(40, 40, 340, 440, "C:/Users/Dell/OneDrive/Desktop/icons/brick2.jpg")
+    brick2_grp = pygame.sprite.Group()
+    brick2_grp.add(brick2)
+    brick3 = obstacle1(40, 40, 460, 200, "C:/Users/Dell/OneDrive/Desktop/icons/brick1.jpg")
+    brick3_grp = pygame.sprite.Group()
+    brick3_grp.add(brick3)
+    brick = obstacle1(40, 40, 340, -50, "C:/Users/Dell/OneDrive/Desktop/icons/brick2.jpg")
+    brick_grp = pygame.sprite.Group()
+    brick_grp.add(brick)
+    coin2 = player1(40,40,660,103,"C:/Users/Dell/OneDrive/Desktop/icons/coin2.jpg")
+    coin2_grp = pygame.sprite.Group()
+    coin2_grp.add(coin2)
+    coin3 = obstacle1(40, 40, 400, 325, "C:/Users/Dell/OneDrive/Desktop/icons/coin.jpg")
+    coin3_grp = pygame.sprite.Group()
+    coin3_grp.add(coin3)
+    rod1 = const(300,400,"C:/Users/Dell/OneDrive/Desktop/icons/rod.jpg")
+    rod1_grp = pygame.sprite.Group()
+    rod1_grp.add(rod1)
+    rod2 = const(501, 400, "C:/Users/Dell/OneDrive/Desktop/icons/rod.jpg")
+    rod2_grp = pygame.sprite.Group()
+    rod2_grp.add(rod2)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+        scr1.fill((0,0,0))
+        obj_grp.draw(scr1)
+        obj_grp.update()
+        coin_grp.draw(scr1)
+        coin_grp.update()
+        brick2_grp.draw(scr1)
+        brick2_grp.update()
+        brick3_grp.draw(scr1)
+        brick3_grp.update()
+        brick_grp.draw(scr1)
+        brick_grp.update()
+        coin2_grp.draw(scr1)
+        coin3_grp.draw(scr1)
+        coin3_grp.update()
+        rod1_grp.draw(scr1)
+        rod2_grp.draw(scr1)
+        #page_grp.update()
+        if pygame.Rect.colliderect(obj.rect, coin.rect) or pygame.Rect.colliderect(obj.rect, coin3.rect):
+             s += 0.15
+        key1 = pygame.key.get_pressed()
+        if key1[K_SPACE]:
+            page2()
+        if pygame.Rect.colliderect(obj.rect,rod1.rect):
+            obj.rect.left = rod1.rect.right
+        if pygame.Rect.colliderect(obj.rect,rod2.rect):
+            obj.rect.right = rod2.rect.left
+        b = text.render(str(round(0.1 * s)), True, "White")
+        scr1.blit(b,(10,400))
+        scr1.blit(bg, (0,-10))
+        scr1.blit(obj.image,obj.rect)
+        scr1.blit(coin.image,coin.rect)
+        scr1.blit(popup.image, popup.rect)
+        scr1.blit(brick.image, brick.rect)
+        scr1.blit(brick2.image, brick2.rect)
+        scr1.blit(brick3.image,brick3.rect)
+        scr1.blit(coin2.image,coin2.rect)
+        scr1.blit(coin3.image, coin3.rect)
+        scr1.blit(rod1.image,rod1.rect)
+        scr1.blit(rod2.image, rod2.rect)
+        scr1.blit(b, (700, 65))
+        pygame.display.flip()
+        pygame.display.update()
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+    obj_grp.draw(scr)
+    o1_grp.update()
+    o1_grp.draw(scr)
+    o12_grp.draw(scr)
+    o13_grp.draw(scr)
+    #s = s + 1
+    pygame.display.update()
+
+
+
